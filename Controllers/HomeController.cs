@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace UserFormSubmission.Controllers
 {
-    public class HomeController : Controller
+    public class UserController : Controller
     {
         public ActionResult Index()
         {
