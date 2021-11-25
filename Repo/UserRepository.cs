@@ -10,7 +10,7 @@ namespace UserFormSubmission.Repo
 {
     public class UserRepository : IUserRepository
     {
-        //private readonly string cs = ConfigurationManager.ConnectionStrings["ConnStringDb"].ConnectionString;
+        private readonly string cs = ConfigurationManager.ConnectionStrings["ConnStringDb"].ConnectionString;
 
         public bool checkUserExists(string email)
         {
@@ -18,8 +18,6 @@ namespace UserFormSubmission.Repo
             {
                 return false;
             }
-
-            string cs = ConfigurationManager.ConnectionStrings["ConnStringDb"].ConnectionString;
 
             string queryString =
                          "SELECT ID FROM dbo.[User] WHERE Email = @email";
@@ -62,7 +60,11 @@ namespace UserFormSubmission.Repo
 
         public bool InsertUser(string email, string password)
         {
-            string cs = ConfigurationManager.ConnectionStrings["ConnStringDb"].ConnectionString;
+
+            if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                return false;
+            }
 
             using (SqlConnection connection =
           new SqlConnection(cs))
