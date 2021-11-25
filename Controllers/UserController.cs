@@ -18,7 +18,7 @@ namespace UserFormSubmission.Controllers
         }
         public ActionResult Index()
         {
-            _userService.InsertUser("new", "testpassword");
+            //_userService.InsertUser("new", "testpassword");
             return View();
         }
     }
