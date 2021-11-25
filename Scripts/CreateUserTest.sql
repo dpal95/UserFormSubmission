@@ -1,0 +1,10 @@
+USE [UserFormSubmissionTest]
+
+CREATE TABLE dbo.[UserTest]
+(
+    ID INT IDENTITY(1,1) NOT NULL,
+    Email NVARCHAR(40) NOT NULL,
+    PasswordHash BINARY(64) NOT NULL,
+	Salt UNIQUEIDENTIFIER NOT NULL,
+	CreatedDate DATE NOT NULL
+)

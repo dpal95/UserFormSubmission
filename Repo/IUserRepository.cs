@@ -9,5 +9,6 @@ namespace UserFormSubmission.Repo
     {
         bool checkUserExists(string email);
         bool InsertUser(string email, string password);
+        bool RemoveUser(string email);
     }
 }

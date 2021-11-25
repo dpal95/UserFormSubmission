@@ -14,6 +14,11 @@ namespace UserFormSubmission.Repo
 
         public bool checkUserExists(string email)
         {
+            if(string.IsNullOrEmpty(email))
+            {
+                return false;
+            }
+
             string cs = ConfigurationManager.ConnectionStrings["ConnStringDb"].ConnectionString;
 
             string queryString =
@@ -42,7 +47,7 @@ namespace UserFormSubmission.Repo
                     else
                     {
                         reader.Close();
-                        return false;                    
+                        return false;
                     }
 
                 }
@@ -57,7 +62,7 @@ namespace UserFormSubmission.Repo
 
         public bool InsertUser(string email, string password)
         {
-           string cs = ConfigurationManager.ConnectionStrings["ConnStringDb"].ConnectionString;
+            string cs = ConfigurationManager.ConnectionStrings["ConnStringDb"].ConnectionString;
 
             using (SqlConnection connection =
           new SqlConnection(cs))
@@ -70,7 +75,7 @@ namespace UserFormSubmission.Repo
                 command.Parameters.AddWithValue("@createdDate", DateTime.Now.Date);
                 // Open the connection in a try/catch block.
                 // Create and execute the sp
-              
+
                 try
                 {
                     connection.Open();
@@ -81,6 +86,44 @@ namespace UserFormSubmission.Repo
                 {
                     Console.WriteLine(ex.Message);
                     return false;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+
+
+        }
+
+        public bool RemoveUser(string email)
+        {
+            string cs = ConfigurationManager.ConnectionStrings["ConnStringDb"].ConnectionString;
+
+            using (SqlConnection connection =
+          new SqlConnection(cs))
+            {
+                // Create the Command and Parameter objects.
+                SqlCommand command = new SqlCommand("spRemoveUser", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@email", email);
+                // Open the connection in a try/catch block.
+                // Create and execute the sp
+
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return false;
+                }
+                finally
+                {
+                    connection.Close();
                 }
             }
 
