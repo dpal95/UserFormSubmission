@@ -12,7 +12,7 @@ namespace UserFormSubmission.Repo
     {
         private readonly string cs = ConfigurationManager.ConnectionStrings["ConnStringDb"].ConnectionString;
 
-        public bool checkUserExists(string email)
+        public bool CheckUserExists(string email)
         {
             if(string.IsNullOrEmpty(email))
             {
@@ -100,8 +100,10 @@ namespace UserFormSubmission.Repo
 
         public bool RemoveUser(string email)
         {
-            string cs = ConfigurationManager.ConnectionStrings["ConnStringDb"].ConnectionString;
-
+            if(string.IsNullOrEmpty(email))
+            {
+                return false;
+            }
             using (SqlConnection connection =
           new SqlConnection(cs))
             {

@@ -16,7 +16,7 @@ namespace UserFormSubmission.Services
         }
         public bool CheckUserExists(string email)
         {
-            return _userRepository.checkUserExists(email);
+            return _userRepository.CheckUserExists(email);
         }
 
         public bool InsertUser(string email, string password)
