@@ -7,6 +7,7 @@ namespace UserFormSubmission.Services
 {
     public interface IUserService
     {
-        bool checkUserExists(string email);
+        bool CheckUserExists(string email);
+        bool InsertUser(string email, string password);
     }
 }

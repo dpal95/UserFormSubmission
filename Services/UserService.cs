@@ -14,9 +14,14 @@ namespace UserFormSubmission.Services
         {
             _userRepository = userRepository;
         }
-        public bool checkUserExists(string email)
+        public bool CheckUserExists(string email)
         {
             return _userRepository.checkUserExists(email);
+        }
+
+        public bool InsertUser(string email, string password)
+        {
+            return _userRepository.InsertUser(email,password);
         }
     }
 }

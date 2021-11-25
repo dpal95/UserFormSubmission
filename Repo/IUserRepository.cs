@@ -8,5 +8,6 @@ namespace UserFormSubmission.Repo
     public interface IUserRepository
     {
         bool checkUserExists(string email);
+        bool InsertUser(string email, string password);
     }
 }
