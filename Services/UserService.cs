@@ -19,7 +19,7 @@ namespace UserFormSubmission.Services
             return _userRepository.CheckUserExists(email);
         }
 
-        public bool InsertUser(string email, string password)
+        public string InsertUser(string email, string password)
         {
             return _userRepository.InsertUser(email,password);
         }

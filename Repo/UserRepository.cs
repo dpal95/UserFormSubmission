@@ -58,12 +58,12 @@ namespace UserFormSubmission.Repo
 
         }
 
-        public bool InsertUser(string email, string password)
+        public string InsertUser(string email, string password)
         {
 
             if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                return false;
+                return "Invalid Data, Please try again";
             }
 
             using (SqlConnection connection =
@@ -82,12 +82,12 @@ namespace UserFormSubmission.Repo
                 {
                     connection.Open();
                     command.ExecuteNonQuery();
-                    return true;
+                    return "User Added Successfully";
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    return false;
+                    return "Error: " + ex.Message;
                 }
                 finally
                 {

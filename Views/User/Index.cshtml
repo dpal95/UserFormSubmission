@@ -4,8 +4,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <link href="PasswordStyle.css" rel="stylesheet" />
-<body>
-    <form id="form1" runat="server">
+
+@*@using (Html.BeginForm("SubmitData", "User", FormMethod.Get, new { role = "form" }))*@
+@*{*@
+    <body>
+
         <div class="container py-3">
             <div class="row">
                 <div class="col-md-12">
@@ -22,7 +25,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                                             </div>
-                                            <input type="text" ID="txtEmail" runat="server" CssClass="form-control"></input>
+                                            <input type="email" required pattern="[^]+[^]+\.[a-zA-Z]{2,6}" name="txtEmail" id="txtEmail" runat="server" CssClass="form-control"></input>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -31,7 +34,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-lock"></i></span>
                                             </div>
-                                            <input type="text" ID="txtPassword" runat="server" TextMode="Password" CssClass="form-control"></input>
+                                            <input type="text" name="txtPassword" id="txtPassword" runat="server" TextMode="Password" CssClass="form-control"></input>
                                         </div>
                                         <div id="strengthMessage"></div>
                                     </div>
@@ -45,7 +48,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-success float-right rounded-0">Register</button>
+                                        <button id="submit" disabled type="submit" class="btn btn-success float-right rounded-0">Register</button>
                                     </div>
                                 </div>
                             </div>
@@ -54,21 +57,46 @@
                 </div>
             </div>
         </div>
-    </form>
-</body>
-
+    </body>
+@*}*@
 <script>
     $(document).ready(function () {
+
+
         $('#txtPassword').keyup(function () {
+
             $('#strengthMessage').html(checkStrength($('#txtPassword').val()))
+            checkPasswords();
         })
+
+        $('#txtConfirmPassword').keyup(function () {
+            $('#strengthMessage').html(checkStrength($('#txtPassword').val()))
+            checkPasswords();
+        })
+
+        function checkPasswords() {
+            debugger;
+            var firstPass = $('#txtPassword').val();
+            var secondPass = $('#txtConfirmPassword').val();
+
+            if (firstPass.length > 0 && firstPass == secondPass) {
+                $('#submit').prop('disabled', false);
+            }
+            else {
+                $('#submit').prop('disabled', true);
+
+            }
+        }
+
         function checkStrength(password) {
             var strength = 0
             if (password.length < 6) {
                 $('#strengthMessage').removeClass()
                 $('#strengthMessage').addClass('Short')
                 return 'Too short'
+
             }
+            $('#submit').prop('disabled', false);
             if (password.length > 7) strength += 1
             // If password contains both lower and uppercase characters, increase strength value.
             if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
@@ -95,5 +123,21 @@
             }
         }
     });
+
+
+    $('#submit').on("click", function () {
+        var email = $('#txtEmail').val();
+        var password = $('#txtPassword').val();
+        $.ajax({
+            url: '@Url.Action("SubmitData", "User")',
+            dataType: 'json',
+            data: { txtEmail: email, txtPassword: password },
+            success: function (resp) {
+                debugger;
+                alert(resp.message);
+            }
+        })
+        
+    })
 </script>
 

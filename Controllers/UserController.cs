@@ -18,8 +18,23 @@ namespace UserFormSubmission.Controllers
         }
         public ActionResult Index()
         {
-            //_userService.InsertUser("new", "testpassword");
             return View();
+        }
+
+        public JsonResult SubmitData(string txtEmail, string txtPassword)
+        {
+            string response = "";
+            var exists = _userService.CheckUserExists(txtEmail);
+            if (!exists)
+            {
+              response = _userService.InsertUser(txtEmail, txtPassword);
+            }
+            else
+            {
+                response = "User already exists, please try again";
+            }
+            return Json(new { message = response }, JsonRequestBehavior.AllowGet);
+
         }
     }
 }
