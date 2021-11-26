@@ -133,8 +133,8 @@
             dataType: 'json',
             data: { txtEmail: email, txtPassword: password },
             success: function (resp) {
-                debugger;
                 alert(resp.message);
+                 location.reload();
             }
         })
         
