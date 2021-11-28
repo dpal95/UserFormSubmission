@@ -14,11 +14,13 @@ namespace UserFormSubmission.Repo
 
         public bool CheckUserExists(string email)
         {
+            //return if email is missing
             if(string.IsNullOrEmpty(email))
             {
                 return false;
             }
 
+            //hard coded sql (not my preference but one way of doing it
             string queryString =
                          "SELECT ID FROM dbo.[User] WHERE Email = @email";
 
@@ -30,8 +32,6 @@ namespace UserFormSubmission.Repo
                 command.Parameters.AddWithValue("@email", email);
 
                 // Open the connection in a try/catch block.
-                // Create and execute the DataReader, writing the result
-                // set to the console window.
                 try
                 {
                     connection.Open();
@@ -60,7 +60,7 @@ namespace UserFormSubmission.Repo
 
         public string InsertUser(string email, string password)
         {
-
+            //return if data is missing
             if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
                 return "Invalid Data, Please try again";
@@ -98,8 +98,11 @@ namespace UserFormSubmission.Repo
 
         }
 
+        //this method is only used for testing for this app
+        //would be used if a full project was built 
         public bool RemoveUser(string email)
         {
+            //return if email is missing
             if(string.IsNullOrEmpty(email))
             {
                 return false;

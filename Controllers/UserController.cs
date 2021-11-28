@@ -22,11 +22,13 @@ namespace UserFormSubmission.Controllers
         }
 
         public JsonResult SubmitData(string txtEmail, string txtPassword)
-        {
+        {            
             string response = "";
+            //check if the user exists before saving
             var exists = _userService.CheckUserExists(txtEmail);
             if (!exists)
             {
+              //save user to db
               response = _userService.InsertUser(txtEmail, txtPassword);
             }
             else
